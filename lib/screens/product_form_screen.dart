@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/products.dart';
 import '../models/product.dart';
 import '../services/shop_service.dart';
+import '../widgets/run_shop_action.dart';
 
 class ProductFormScreen extends StatefulWidget {
   final ShopService shop;
@@ -44,9 +45,9 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     super.dispose();
   }
 
-  void _save() {
+  Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
-    widget.shop.saveProduct(
+    await widget.shop.saveProduct(
       id: widget.product?.id,
       name: _name.text.trim(),
       category: _category,
@@ -54,14 +55,8 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
       description: _description.text.trim(),
       imageUrl: _imageUrl.text.trim(),
     );
+    if (!mounted) return;
     Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(widget.product == null
-            ? 'Тауар каталогқа қосылды'
-            : 'Тауар ақпараты сақталды'),
-      ),
-    );
   }
 
   @override
@@ -150,7 +145,13 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                     ),
                     const SizedBox(height: 18),
                     FilledButton(
-                      onPressed: _save,
+                      onPressed: () => runShopAction(
+                        context,
+                        _save,
+                        successMessage: widget.product == null
+                            ? 'Тауар каталогқа қосылды'
+                            : 'Тауар ақпараты сақталды',
+                      ),
                       child: const Text('Сақтау'),
                     ),
                   ],

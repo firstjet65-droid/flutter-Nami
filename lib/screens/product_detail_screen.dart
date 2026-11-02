@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../services/shop_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/run_shop_action.dart';
 import 'product_form_screen.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -96,8 +97,10 @@ class ProductDetailScreen extends StatelessWidget {
                                     shop.favorites.contains(currentProduct.id)
                                         ? 'Таңдаулыдан алып тастау'
                                         : 'Таңдаулыға қосу',
-                                onPressed: () =>
-                                    shop.toggleFavorite(currentProduct.id),
+                                onPressed: () => runShopAction(
+                                  context,
+                                  () => shop.toggleFavorite(currentProduct.id),
+                                ),
                                 icon: Icon(
                                   shop.favorites.contains(currentProduct.id)
                                       ? Icons.favorite
@@ -107,14 +110,11 @@ class ProductDetailScreen extends StatelessWidget {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: FilledButton.icon(
-                                  onPressed: () {
-                                    shop.addToCart(currentProduct);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Тауар себетке қосылды'),
-                                      ),
-                                    );
-                                  },
+                                  onPressed: () => runShopAction(
+                                    context,
+                                    () => shop.addToCart(currentProduct),
+                                    successMessage: 'Тауар себетке қосылды',
+                                  ),
                                   icon:
                                       const Icon(Icons.shopping_cart_outlined),
                                   label: const Text('Себетке қосу'),

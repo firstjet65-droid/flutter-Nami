@@ -41,7 +41,7 @@ class _HomeShellState extends State<HomeShell> {
               const NavigationDestination(
                 icon: Icon(Icons.home_outlined),
                 selectedIcon: Icon(Icons.home),
-                label: 'Басты',
+                label: 'Басты ',
               ),
               NavigationDestination(
                 icon: const Icon(Icons.shopping_cart_outlined),

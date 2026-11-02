@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../services/shop_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/run_shop_action.dart';
 
 class SettingsScreen extends StatelessWidget {
   final ShopService shop;
@@ -22,7 +23,10 @@ class SettingsScreen extends StatelessWidget {
                   title: const Text('Қараңғы тақырып'),
                   subtitle: const Text('Қосымшаның түс көрінісін өзгерту'),
                   value: shop.darkMode,
-                  onChanged: shop.setDarkMode,
+                  onChanged: (enabled) => runShopAction(
+                    context,
+                    () => shop.setDarkMode(enabled),
+                  ),
                 ),
               ),
               Card(
@@ -30,7 +34,10 @@ class SettingsScreen extends StatelessWidget {
                   secondary: const Icon(Icons.notifications_outlined),
                   title: const Text('Хабарландырулар'),
                   value: shop.notificationsEnabled,
-                  onChanged: shop.setNotificationsEnabled,
+                  onChanged: (enabled) => runShopAction(
+                    context,
+                    () => shop.setNotificationsEnabled(enabled),
+                  ),
                 ),
               ),
             ],

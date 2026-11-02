@@ -10,7 +10,9 @@ import 'services/shop_service.dart';
 import 'theme/app_theme.dart';
 
 class ShopApp extends StatefulWidget {
-  const ShopApp({super.key});
+  final ShopService? shop;
+
+  const ShopApp({super.key, this.shop});
 
   @override
   State<ShopApp> createState() => _ShopAppState();
@@ -22,7 +24,7 @@ class _ShopAppState extends State<ShopApp> {
   @override
   void initState() {
     super.initState();
-    shop = ShopService();
+    shop = widget.shop ?? ShopService();
   }
 
   @override

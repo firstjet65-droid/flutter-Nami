@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/product.dart';
 import '../services/shop_service.dart';
+import '../widgets/run_shop_action.dart';
 import 'product_detail_screen.dart';
 
 class FavoritesScreen extends StatelessWidget {
@@ -59,17 +60,15 @@ class FavoritesScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onRemove: () => shop.toggleFavorite(items[index].id),
-                      onAdd: () {
-                        shop.addToCart(items[index]);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              '${items[index].name} себетке қосылды',
-                            ),
-                          ),
-                        );
-                      },
+                      onRemove: () => runShopAction(
+                        context,
+                        () => shop.toggleFavorite(items[index].id),
+                      ),
+                      onAdd: () => runShopAction(
+                        context,
+                        () => shop.addToCart(items[index]),
+                        successMessage: '${items[index].name} себетке қосылды',
+                      ),
                     ),
                   ),
           );

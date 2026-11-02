@@ -4,6 +4,7 @@ import '../data/products.dart';
 import '../models/product.dart';
 import '../services/shop_service.dart';
 import '../widgets/product_card.dart';
+import '../widgets/run_shop_action.dart';
 import 'product_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -347,17 +348,16 @@ class ProductGrid extends StatelessWidget {
               return ProductCard(
                 product: product,
                 onOpen: () => onOpen(product),
-                onAdd: () {
-                  shop.addToCart(product);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('${product.name} себетке қосылды'),
-                      duration: const Duration(seconds: 1),
-                    ),
-                  );
-                },
+                onAdd: () => runShopAction(
+                  context,
+                  () => shop.addToCart(product),
+                  successMessage: '${product.name} себетке қосылды',
+                ),
                 isFavorite: shop.favorites.contains(product.id),
-                onFavorite: () => shop.toggleFavorite(product.id),
+                onFavorite: () => runShopAction(
+                  context,
+                  () => shop.toggleFavorite(product.id),
+                ),
               );
             },
           );
@@ -391,17 +391,16 @@ class ProductGridSliver extends StatelessWidget {
                   return ProductCard(
                     product: product,
                     onOpen: () => onOpen(product),
-                    onAdd: () {
-                      shop.addToCart(product);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('${product.name} себетке қосылды'),
-                          duration: const Duration(seconds: 1),
-                        ),
-                      );
-                    },
+                    onAdd: () => runShopAction(
+                      context,
+                      () => shop.addToCart(product),
+                      successMessage: '${product.name} себетке қосылды',
+                    ),
                     isFavorite: shop.favorites.contains(product.id),
-                    onFavorite: () => shop.toggleFavorite(product.id),
+                    onFavorite: () => runShopAction(
+                      context,
+                      () => shop.toggleFavorite(product.id),
+                    ),
                   );
                 },
                 childCount: items.length,

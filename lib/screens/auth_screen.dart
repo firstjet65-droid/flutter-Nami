@@ -32,12 +32,13 @@ class _AuthScreenState extends State<AuthScreen> {
     return valid ? null : 'Дұрыс email мекенжайын енгізіңіз';
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     final name = widget.register
         ? _name.text.trim()
         : _email.text.trim().split('@').first;
-    widget.shop.authenticate(name);
+    await widget.shop.authenticate(name);
+    if (!mounted) return;
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -100,7 +101,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     const SizedBox(height: 18),
                     FilledButton(
-                      onPressed: _submit,
+                      onPressed: () => _submit(),
                       child: Text(widget.register ? 'Тіркелу' : 'Кіру'),
                     ),
                     TextButton(

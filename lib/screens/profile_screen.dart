@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../services/shop_service.dart';
 import '../theme/app_theme.dart';
+import 'api_products_screen.dart';
 import 'product_form_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -131,17 +132,35 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Card(
-                child: ListTile(
-                  leading: const Icon(Icons.add_business_outlined),
-                  title: const Text('Тауар қосу'),
-                  subtitle: const Text('Жаңа тауарды каталогқа енгізу'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => ProductFormScreen(shop: shop),
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.add_business_outlined),
+                      title: const Text('Тауар қосу'),
+                      subtitle: const Text('Жаңа тауарды каталогқа енгізу'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ProductFormScreen(shop: shop),
+                        ),
+                      ),
                     ),
-                  ),
+                    const Divider(height: 1),
+                    ListTile(
+                      leading: const Icon(Icons.cloud_sync_outlined),
+                      title: const Text('REST API каталогы'),
+                      subtitle:
+                          const Text('Серверден тауар алып, CRUD орындау'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const ApiProductsScreen(),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 20),

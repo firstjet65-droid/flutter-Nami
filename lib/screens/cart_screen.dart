@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/product.dart';
 import '../services/shop_service.dart';
+import '../widgets/run_shop_action.dart';
 import 'checkout_screen.dart';
 
 class CartScreen extends StatelessWidget {
@@ -34,8 +35,13 @@ class CartScreen extends StatelessWidget {
                           itemBuilder: (context, index) => _CartItem(
                             product: items[index],
                             quantity: shop.cart[items[index].id]!,
-                            onChange: (delta) =>
-                                shop.changeQuantity(items[index].id, delta),
+                            onChange: (delta) => runShopAction(
+                              context,
+                              () => shop.changeQuantity(
+                                items[index].id,
+                                delta,
+                              ),
+                            ),
                           ),
                         ),
                       ),

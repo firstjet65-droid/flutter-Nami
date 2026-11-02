@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/shop_service.dart';
+import '../widgets/run_shop_action.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final ShopService shop;
@@ -22,12 +23,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     super.dispose();
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
-    widget.shop.placeOrder(
+    await widget.shop.placeOrder(
       address: _address.text.trim(),
       paymentMethod: _payment,
     );
+    if (!mounted) return;
     Navigator.pushReplacementNamed(context, '/success');
   }
 
@@ -83,7 +85,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                     const SizedBox(height: 18),
                     FilledButton(
-                      onPressed: _submit,
+                      onPressed: () => runShopAction(context, _submit),
                       child: const Text('Тапсырысты растау'),
                     ),
                   ],
